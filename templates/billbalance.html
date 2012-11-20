@@ -1,0 +1,105 @@
+{% extends "bootstrapbase.html" %}
+{% block title %}Billbalance{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/billbalance">Billbalance</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <!--<li><a href="#insert">Insert</a></li>
+                            <li><a href="#history">History</a></li>-->
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            {% if errorlist %}
+            <div class="alert alert-error">
+                <strong>Error</strong>
+                <ul>
+                {% for error in errorlist %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if updated %}
+            <div class="alert alert-success">
+                <button data-dismiss="alert" class="close" type="button">&times;</button>
+                <strong>Success!</strong>
+                You have successfully updated the bill.
+            </div>
+            {% endif %}
+
+            <div class="hero-unit">
+                <h2>Status</h2>
+                {% for person in person_list %}
+                <p>
+                    {{ person.name }}
+                    <span class="badge badge-{% if person.balance < 0 %}important{% else %}success{% endif %}">{{ person.balance|floatformat:2 }}</span>
+                </p>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div id="insert" class="span4">
+                    <h2>Insert</h2>
+                    <form action="" method="POST">
+                        <p>
+                            {% if person_list %}
+                            <select name="person">
+                                {% for person in person_list %}
+                                <option value="{{ person.name }}"{% ifequal person selected_person %} selected="selected" {% endifequal %}>{{ person.name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% else %}
+                            no persons found
+                            {% endif %}
+                        </p>
+                        <p>
+                            <input type="text" name="amount" placeholder="Amount" />
+                        </p>
+                        <p class="controls">
+                            Persons:<br/>
+                            {% if person_list %}
+                            {% for person in person_list %}
+                            <label class="checkbox inline"><input type="checkbox" name="persons" value="{{ person.name }}" checked="checked"/>{{ person.name }}</label>
+                            {% endfor %}
+                            </select>
+                            {% else %}
+                            no persons found
+                            {% endif %}
+                        </p>
+                        <p>
+                            {% if person_list %}<input class="btn btn-primary btn-large btn-block" type="submit" value="Insert" />{% endif %}
+                        </p>
+                    </form>
+                </div>
+                <div id="history" class="span6 offset2">
+                    <h2>History</h2>
+                    {% for bill in bills %}
+                    <p {% if bill.amount > 0%}class="history_pos"{% endif %}>
+                        {{ bill.person.name }} <span class="badge badge-{% if bill.amount < 0 %}important{% else %}success{% endif %}">{{ bill.amount }}</span>
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <hr>
+            <footer>
+                <p>&copy; Odin 2012</p>
+            </footer>
+        </div>
+{% endblock %}

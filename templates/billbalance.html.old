@@ -1,0 +1,74 @@
+{% extends "base2.html" %}
+{% block title %}Billbalance{% endblock %}
+{% block head %}
+<style type="text/css">
+.red {
+	color: red;
+}
+.green {
+	color: green;
+}
+td {
+	padding: 4px;
+}
+</style>
+{% endblock %}
+{% block content %}
+{% if updated %}
+<p>Updated</p>
+{% endif %}
+<ul>
+{% for person in person_list %}
+	<li>
+		{{ person.name }}
+		<span class="{% if person.balance < 0 %}red{% else %}green{% endif %}">
+			{{ person.balance|floatformat:2 }}
+		</span>
+	</li>
+{% endfor %}
+</ul>
+<form action="" method="POST">
+	<p>
+		<label>
+			Person:
+			{% if person_list %}
+			<select name="person">
+				{% for person in person_list %}
+				<option value="{{ person.name }}"{% ifequal person selected_person %} selected="selected" {% endifequal %}>{{ person.name }}</option>
+				{% endfor %}
+			</select>
+			{% else %}
+			no persons found
+			{% endif %}
+		</label>
+	</p>
+	<p>
+		<label>
+			Amount:
+			<input type="text" name="amount" />
+		</label>
+	</p>
+	<p>
+		Persons:
+		{% if person_list %}
+		{% for person in person_list %}
+		<label><input type="checkbox" name="persons" value="{{ person.name }}" checked="checked"/>{{ person.name }}</label>
+		{% endfor %}
+		</select>
+		{% else %}
+		no persons found
+		{% endif %}
+	</p>
+	<p>
+		<input type="submit" value="Insert" />
+	</p>
+</form>
+<table>
+	{% for bill in bills %}
+	<tr class="{% if bill.amount < 0 %}red{% else %}green{% endif %}">
+		<td>{{ bill.person.name }}</td>
+		<td>{{ bill.amount }}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

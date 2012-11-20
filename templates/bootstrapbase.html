@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link href="/static/css/amanda-bootstrap.min.css" rel="stylesheet" />
+		<style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+            .history_pos {
+                padding-bottom: 20px;
+            }
+		</style>
+        <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+		{% block head %}{% endblock %}
+	</head>
+	<body>
+	{% block content %}{% endblock %}
+	</body>
+</html>

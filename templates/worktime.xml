@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<worktimes>
+	{% for temp in worktimes %}
+	<worktime>
+		<date>{{ temp.time }}</date>
+		<time_worked>{{ temp.worked_in_period }}</time_worked>
+		<times>
+			{% for worktime in temp.worktimes %}
+			<time>
+				<time_spent>{{ worktime.time_spent }}</time_spent>
+				<project>{{ worktime.project.name }}</project>
+				<description>{{ worktime.description }}</description>
+			</time>
+			{% endfor %}
+		</times>
+	</worktime>
+	{% endfor %}
+</worktimes>

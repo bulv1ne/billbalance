@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+		<meta name="viewport" content="width=320,user-scalable=false" />
+		<style type="text/css">
+			.error {
+				color: red;
+			}
+		</style>
+		{% block head %}{% endblock %}
+	</head>
+	<body>
+	{% if errorlist %}
+	<h3 class="error">Error</h3>
+	<ul class="error">
+	{% for error in errorlist %}
+		<li>{{ error }}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	{% block content %}{% endblock %}
+	</body>
+</html>

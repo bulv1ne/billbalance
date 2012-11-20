@@ -1,0 +1,71 @@
+{% extends "base2.html" %}
+{% block title %}General buy - Receipt{% endblock %}
+{% block head %}
+<style type="text/css">
+table {
+	border-collapse:collapse;
+}
+td {
+	border: 1px solid #d0d0d0;
+	padding: 5px;
+	margin: 0px;
+}
+</style>
+<script type="text/javascript">
+//document.body.innerHTML
+	function load()
+	{
+//		alert(document.body.innerHTML);
+//		window.location.href = "mailto:?subject=" + escape("{{ receipt.name }}") + "&body=" + escape(document.body.innerHTML);
+	}
+
+	window.onload = load;
+</script>
+
+{% endblock %}
+{% block content %}
+<h1>General buy</h1>
+{% if receipt %}
+<h4>{{ receipt.name }}</h4>
+{% if product_list %}
+<h3>Product list</h3>
+<table>
+	{% for product in product_list %}
+	<tr>
+		<td>{{ product.name }}</td>
+		<td>{{ product.quantity }}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endif %}
+{% if user_buys %}
+<h3>User buys</h3>
+<table>
+	{% for user in user_buys %}
+	<tr>
+		<td>{{ user.username }}</td>
+		<td>&nbsp;</td>
+	<tr>
+	{% for userbuysproduct in user.products %}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{{ userbuysproduct.product.name }}</td>
+	</tr>
+	{% endfor %}
+	{% endfor %}
+</table>
+{% endif %}
+{% if user_pays %}
+<h3>User pays</h3>
+<table>
+	{% for user in user_pays %}
+	<tr>
+		<td>{{ user.username }}</td>
+		<td>&euro; {{ user.price|floatformat:2 }}</td>
+	<tr>
+	{% endfor %}
+</table>
+<p>Total: &euro; {{ receipt.total|floatformat:2 }}</p>
+{% endif %}
+{% endif %}
+{% endblock %}

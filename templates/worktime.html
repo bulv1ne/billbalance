@@ -1,0 +1,61 @@
+{% extends "base2.html" %}
+{% block title %}WorkTime - All times{% endblock %}
+{% block content %}
+<h1>WorkTime</h1>
+<h2>Projects</h2>
+<table>
+	<tr>
+		<th>Project name</th>
+		<th>Time spent</th>
+		<th>Time spent in hours</th>
+	</tr>
+	{% for temp in projects %}
+	<tr>
+		<td>
+			{{ temp.name }}
+		</td>
+		<td>
+			{{ temp.time_spent }}
+		</td>
+		<td style="text-align: right;">
+			{{ temp.time_spent_in_hours|floatformat:2 }}
+		</td>
+	</tr>
+	{% endfor %}
+	<tr style="font-weight:bold;">
+		<td>
+			Total projects
+		</td>
+		<td>
+			{{ total_projects.time_spent }}
+		</td>
+		<td style="text-align: right;">
+			{{ total_projects.time_spent_in_hours|floatformat:2 }}
+		</td>
+	</tr>
+<table>
+<h2>Work times</h2>
+<table>
+	{% for temp in worktimes %}
+	<tr style="font-weight: bold;">
+		<td>
+			Date: {{ temp.time }}
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr style="font-weight: bold;">
+		<td>
+			Time worked: {{ temp.worked_in_period }}
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	{% for worktime in temp.worktimes %}
+	<tr>
+		<td>{{ worktime.time_spent }}</td>
+		<td>{{ worktime.project.name }}</td>
+		<td>{{ worktime.description }}</td>
+	</tr>
+	{% endfor %}
+	{% endfor %}
+<table>
+{% endblock %}

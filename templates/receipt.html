@@ -1,0 +1,108 @@
+{% extends "base2.html" %}
+{% block title %}General buy - Receipt{% endblock %}
+{% block head %}
+<style type="text/css">
+table {
+	border-collapse:collapse;
+}
+td {
+	border: 1px solid #d0d0d0;
+	padding: 5px;
+	margin: 0px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<h1>General buy</h1>
+<ul>
+	<li><a href="/generalbuy/">Add to receipt</a></li>
+	<li><a href="/generalbuy/receipt/">See receipt</a></li>
+</ul>
+<h3>Receipts</h3>
+{% if receipts %}
+<ul>
+	{% for receipti in receipts %}
+	<li>{% ifnotequal receipti receipt %}<a href='/generalbuy/receipt/{{ receipti.id }}/'>{% endifnotequal %}{{ receipti.name }}{% ifnotequal receipti receipt %}</a>{% endifnotequal %}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+<form action="" method="POST">
+	<p>
+		<label>
+			New receipt:
+			<input type="text" name="receipt_name" />
+		</label>
+		<label>
+			shop:
+			<select name="shop_id">
+				<option value="-1">-----</option>
+				{% for shop in shops %}
+				<option value="{{ shop.id }}">{{ shop.name }}</option>
+				{% endfor %}
+			</select>
+		</label>
+		<input type="submit" value="Add" />
+	</p>
+</form>
+{% if receipt %}
+<h4>{{ receipt.name }}</h4>
+{% if receipt.is_open %}
+<form action="" method="POST">
+	<p>
+		<input type="hidden" name="close_receipt" value="1" />
+		<input type="submit" value="Close receipt" />
+	</p>
+</form>
+{% else %}
+<p>Receipt closed</p>
+{% endif %}
+<ul>
+	<li><a href='/generalbuy/receipt/{{ receipt.id }}/productlist/'>What is bought?</a></li>
+	<li><a href='/generalbuy/receipt/{{ receipt.id }}/buy/'>Who bought what?</a></li>
+	<li><a href='/generalbuy/receipt/{{ receipt.id }}/pay/'>Who pays what?</a></li>
+</ul>
+{% if mode %}
+<p><a href='javascript:window.open("/generalbuy/receipt/{{ receipt.id }}/{{ mode }}/print/");'>Print</a></p>
+{% endif %}
+{% endif %}
+{% if product_list %}
+<h3>Product list</h3>
+<table>
+	{% for product in product_list %}
+	<tr>
+		<td>{{ product.name }}</td>
+		<td>{{ product.quantity }}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endif %}
+{% if user_buys %}
+<h3>User buys</h3>
+<table>
+	{% for user in user_buys %}
+	<tr>
+		<td>{% if first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</td>
+		<td>&nbsp;</td>
+	<tr>
+	{% for userbuysproduct in user.products %}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{{ userbuysproduct.product.name }}</td>
+	</tr>
+	{% endfor %}
+	{% endfor %}
+</table>
+{% endif %}
+{% if user_pays %}
+<h3>User pays</h3>
+<table>
+	{% for user in user_pays %}
+	<tr>
+		<td>{% if first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</td>
+		<td>&euro; {{ user.price|floatformat:2 }}</td>
+	<tr>
+	{% endfor %}
+</table>
+<p>Total: &euro; {{ receipt.total|floatformat:2 }}</p>
+{% endif %}
+{% endblock %}

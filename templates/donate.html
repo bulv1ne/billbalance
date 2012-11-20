@@ -1,0 +1,53 @@
+{% extends "base2.html" %}
+{% block title %}DraSo Teamspeak - Donate{% endblock %}
+{% block content %}
+<div style="width:400px">
+<h1>DraSo Teamspeak</h1>
+<h2>Top donaters</h2>
+<p>
+	I want to thank the contributor(s) for their effort of
+	donating to the teamspeak server :)
+</p>
+<ol>
+	<li>
+		Griever
+		&euro;3.75
+	</li>
+</ol>
+<h2>Donate</h2>
+<p>
+	Hi, I'm Odin. You might not know me so well or at all,
+	but I'm the owner of this TeamSpeak 3 server.
+</p>
+<p>
+	When TS3 was down, I tried to fix it ASAP when someone
+	let me know the error. That was only for the people
+	who know how to contact me :P
+</p>
+<p>
+	Currently this server runs on a little computer in my
+	old room in Belgium. My parrents are not happy about
+	a computer running without shutting down, it uses to much
+	electricity.
+</p>
+<p>
+	I want to keep this server running for my friends
+	so they ask &euro;20 of me monthly. But I'm not using
+	this server honestly. That's why I made this donation
+	page.
+</p>
+<p>
+	Else I'm afraid that I have to shut down this server.
+</p>
+<p>
+	Thanks for your understanding.
+</p>
+</div>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="SCJVEKQX9ALXC">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+{% endblock %}

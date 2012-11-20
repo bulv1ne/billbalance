@@ -1,0 +1,10 @@
+{% extends "base2.html" %}
+{% block title %}IP ban{% endblock %}
+{% block content%}
+<h1>General buy</h1>
+{% if ip.banned_for_life %}
+<p>Je bent gebanned. Contacteer de admins hiervoor.</p>
+{% else %}
+<p>Niet zo ongeduldig!! Nu moet je 10 seconden wachten.</p>
+{% endif %}
+{% endblock %}

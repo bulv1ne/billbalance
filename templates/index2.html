@@ -1,0 +1,78 @@
+{% extends "base2.html" %}
+{% block title %}General buy - Add to receipt{% endblock %}
+{% block content %}
+<h1>General buy</h1>
+<ul>
+	<li><a href="/generalbuy/">Add to receipt</a></li>
+	<li><a href="/generalbuy/receipt/">See receipt</a></li>
+</ul>
+{% if user %}
+<h3>Receipts</h3>
+<ul>
+	{% for receipti in receipts %}
+	<li>{% ifnotequal receipti receipt %}<a href="/generalbuy/{{ receipti.id }}/">{% endifnotequal %}{{ receipti.name}}{% ifnotequal receipti receipt %}</a>{% endifnotequal %}</li>
+	{% endfor %}
+</ul>
+<form action="" method="POST">
+<p>
+	Welcome {{ user.first_name }}
+	<input type="submit" name="logout" value="Logout" />
+</p>
+</form>
+{% if receipt %}
+<h3>Selected products</h3>
+{% if selected_products %}
+<ul>
+	{% for user_buys_product in selected_products %}
+	<li>
+		{% if receipt.is_open %}
+		<form action="" method="POST">
+		<span>
+			{{ user_buys_product.product.name }} (&euro; {{ user_buys_product.product.price|floatformat:2 }})
+			<input type="hidden" name="del_ubp_id" value="{{ user_buys_product.id }}" />
+			<input type="submit" value="Delete" />
+		</span>
+		</form>
+		{% else %}
+		{{ user_buys_product.product.name }} (&euro; {{ user_buys_product.product.price|floatformat:2 }})
+		{% endif %}
+	</li>
+	{% endfor %}
+</ul>
+<p>Total: &euro; {{ total|floatformat:2 }}</p>
+{% else %}
+<p>No products added yet</p>
+{% endif %}
+<h3>Products</h3>
+<ul>
+	{% for product in products %}
+	<li>
+		{% if receipt.is_open %}
+		<form action="" method="POST">
+		<span>
+			{{ product.name }} (&euro; {{ product.price|floatformat:2 }})
+			<input type="hidden" name="add_ubp_id" value="{{ product.id }}" />
+			<input type="submit" value="Add" />
+		</span>
+		{% else %}
+		{{ product.name }} (&euro; {{ product.price|floatformat:2 }})
+		{% endif %}
+		</form>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% else %}
+<h3>Login</h3>
+<form action="" method="POST">
+	<p>Username is bound to ip!!</p>
+	<p>
+		<label>
+			Username:
+			<input type="text" name="username" />
+		</label>
+		<input type="submit" name="btnOrder" value="Start ordering" />
+	</p>
+</form>
+{% endif %}
+{% endblock %}
