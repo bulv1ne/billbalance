@@ -2,7 +2,6 @@ Billbalance
 ===========
 
 Billbalance is a website that helped my girlfriend and I keep track of all the bills.
-The website subtracts an equal part for every person sellected.
 We are still using the website actively since the day I introduced it to her.
 
 This project is quite small and can become a very big project. 
@@ -17,12 +16,12 @@ When someone wants to update billbalance, he or she goes to http://example.com/b
 selects who payed,
 for who and how much,
 and finishes by pressing the Insert button.
-
+The website subtracts an equal part for every person sellected.
 
 Settings
 --------
 
-[Django 1.4](https://www.djangoproject.com/) or up is required. Although Django 1.3 should be fine also.
+[Django 1.4](https://www.djangoproject.com/) or up is required. Although Django 1.3 should be fine also.  
 [Bootstrap v2.2.1](http://twitter.github.com/bootstrap/) is implemented for css if you want your own style.
 
 * Download code
